@@ -1,24 +1,51 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
 	<head>
+    <meta charset="utf-8">
  		<title>Las Antipodas</title>
 		<style>
-			#map {
+			#map, #antipodas {
 				width:500px;
 				height: 400px;
+        border: solid  black 1px;
 			}
  		</style>
  	</head>
 	<body>
-        	<p id='map'></p>
+        	<p id="map"></p>
+          <p id="antipodas">Aquí voy a poner las antípodas</p>
   	        <script type="text/javascript" charset="utf-8">
+
+            function showAntipodes(lat, lon){
+              var latitude = -1 * lat;
+              var longitude = lon + 180;
+              var antipodasMapDiv = document.getElementById("antipodas");
+              var antipodesMap = new google.maps.Map(antipodasMapDiv, {
+              center: {lat: latitude, lng: longitude},
+              zoom: 14});
+              console.log("Hecho");
+            }
             function initMap(){
-                var mapDiv = document.getElementById("map");
-				var map = new google.maps.Map(mapDiv, {
-					center: {lat: 40.283743650362996, lng: -3.8191530513763428},
-					zoom: 15
-				});
- 			}
+              var mapDiv = document.getElementById("map");
+              if (Modernizr.geolocation) {
+                console.log("El navegador soporta geolocalización");
+                navigator.geolocation.getCurrentPosition(function (position){
+                  var latitude = position.coords.latitude;
+                  console.log("Obtenida latitud");
+                  var longitude = position.coords.longitude;
+                  console.log("Obtenida longitud");
+  				        var map = new google.maps.Map(mapDiv, {
+  					      center: {lat: latitude, lng: longitude},
+  					      zoom: 15});
+                  console.log("Mapa inicializado");
+                  showAntipodes(latitude,longitude);
+                });
+              }
+              else {
+                mapDiv.innerHTML = "No geolocation available";
+              }
+          }
  		</script>
 		<script src = "https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
 	</body>
