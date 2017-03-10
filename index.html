@@ -4,42 +4,44 @@
 	<head>
     <meta charset="utf-8">
  		<title>Las Antipodas</title>
-		<style>
-			#map, #antipodas {
-				width:500px;
-				height: 400px;
-        border: solid  black 1px;
-			}
- 		</style>
+    <link rel="stylesheet" type="text/css" href="antipodes_styles.css">
  	</head>
 	<body>
-        	<p id="map"></p>
-          <p id="antipodas">Aquí voy a poner las antípodas</p>
+
+          <div id="maps">
+        	  <span id="map"></span>
+            <span id="antipodas">Aquí voy a poner las antípodas</span>
+          </div>
+          <div id="legends">
+            <span>Posición Actual</span>
+            <span id="ant_legend">Nuestras antípodas</span>
+          </div>    
   	        <script type="text/javascript" charset="utf-8">
 
-            function showAntipodes(lat, lon){
+            function showAntipodes(lat, lon, ant){
+
               var latitude = -1 * lat;
               var longitude = lon + 180;
-              var antipodasMapDiv = document.getElementById("antipodas");
-              var antipodesMap = new google.maps.Map(antipodasMapDiv, {
+              var antipodesMap = new google.maps.Map(ant, {
               center: {lat: latitude, lng: longitude},
-              zoom: 14});
-              console.log("Hecho");
+              zoom: 12});
             }
             function initMap(){
+
               var mapDiv = document.getElementById("map");
+              var antipodasMapDiv = document.getElementById("antipodas");
+
               if (Modernizr.geolocation) {
-                console.log("El navegador soporta geolocalización");
                 navigator.geolocation.getCurrentPosition(function (position){
+
                   var latitude = position.coords.latitude;
-                  console.log("Obtenida latitud");
                   var longitude = position.coords.longitude;
-                  console.log("Obtenida longitud");
+
   				        var map = new google.maps.Map(mapDiv, {
   					      center: {lat: latitude, lng: longitude},
-  					      zoom: 15});
-                  console.log("Mapa inicializado");
-                  showAntipodes(latitude,longitude);
+  					      zoom: 12});
+
+                  showAntipodes(latitude,longitude,antipodasMapDiv);
                 });
               }
               else {
@@ -47,6 +49,7 @@
               }
           }
  		</script>
-		<script src = "https://maps.googleapis.com/maps/api/js?callback=initMap" async defer></script>
+    <!--Llamada a la API de Google maps con clave de autenticación para poder mostrar los mapas<-->
+		<script src = "https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA4_Z_vuxo6nQCZ_2K2Tz7DkG8qZLQuMGg&callback=initMap" async defer></script>
 	</body>
 </html>
