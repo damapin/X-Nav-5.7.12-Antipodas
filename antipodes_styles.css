@@ -1,0 +1,29 @@
+
+			#map, #antipodas {
+				width:600px;
+				height: 480px;
+        border: solid  black 1px;
+			}
+      #antipodas{
+        margin-right: 30px;
+        float: right;
+      }
+      #map{
+        margin-left: 30px;
+        float: left;
+      }
+
+      #maps{
+        clear: both;
+        margin-top: 50px;
+      }
+
+      #legends{
+        clear: both;
+        padding: 35px;
+      }
+
+      #ant_legend{
+        padding-left: 34em;
+      }
+ 		
